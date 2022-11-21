@@ -1,33 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { CssBaseline, Box, Typography } from '@mui/material'
 
 import { AppBar, Videos } from './components'
-import { useDebounce } from './hooks'
-import * as API from './api'
+import { useLogin, useCurrentUser, useSearch } from './hooks'
 
 const App = () => {
   const [searchWord, setSearchWord] = useState('')
   const [activeView, setActiveView] = useState('home')
-  const [videos, setVideos] = useState([])
   const [favorites, setFavorites] = useState([])
 
-  const debouncedSearchValue = useDebounce(searchWord)
-
-  useEffect(() => {
-    const searchSongs = async () => {
-      try {
-        const {
-          data: { data },
-        } = await API.searchSongs(debouncedSearchValue)
-
-        setVideos(data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    searchSongs()
-  }, [debouncedSearchValue])
+  // login default user
+  useLogin({ email: 'jasminluka@gmail.com', password: 'admin123' })
+  // get current user
+  const currentUser = useCurrentUser()
+  // search for videos
+  const [videos] = useSearch(searchWord)
 
   return (
     <Box
@@ -49,6 +36,7 @@ const App = () => {
             videos={videos}
             activeView={activeView}
             setFavorites={setFavorites}
+            userId={currentUser._id}
             favorites={favorites}
           />
         ) : (

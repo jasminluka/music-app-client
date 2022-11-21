@@ -11,10 +11,8 @@ import {
 
 import * as API from '../../api'
 
-// default user id
-const userId = 1
-
 const VideoCard = ({
+  userId,
   id: songId,
   _id: favoriteId,
   name,

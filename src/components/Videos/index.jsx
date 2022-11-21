@@ -2,7 +2,13 @@ import { Stack, Box } from '@mui/material'
 
 import { VideoCard } from '../'
 
-const Videos = ({ videos, activeView, setFavorites, favorites = [] }) => {
+const Videos = ({
+  videos,
+  activeView,
+  setFavorites,
+  userId,
+  favorites = [],
+}) => {
   return (
     <Stack
       direction="row"
@@ -16,6 +22,7 @@ const Videos = ({ videos, activeView, setFavorites, favorites = [] }) => {
         <Box key={video.id}>
           <VideoCard
             {...video}
+            userId={userId}
             activeView={activeView}
             favorites={favorites}
             setFavorites={setFavorites}
